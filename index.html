@@ -7,77 +7,73 @@
   <style>
     body {
       font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin: 0;
       background-color: #f9f9f9;
       color: #333;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: #eee;
+      padding: 1rem 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      z-index: 10;
     }
 
     h1 {
-      font-weight: 600;
-      font-size: 3rem;
-      color: #333;
-      margin: 2rem 0 0.3rem 0;
-    }
-
-    h2 {
-      font-weight: 400;
-      font-size: 1.1rem;
-      color: #777;
-      margin: 0 0 1.5rem 0;
-    }
-
-    #scrollbox {
-      flex: 1;
-      overflow-y: auto;
-      padding: 2rem 1rem;
-      scroll-behavior: smooth;
+      font-weight: 500;
+      font-size: 2.8rem;
+      margin: 1.5rem 0;
+      color: #444;
+      letter-spacing: 1px;
     }
 
     .quote {
-      font-size: 1.5rem;
-      max-width: 700px;
-      margin: 2rem auto;
+      font-size: 1.6rem;
+      max-width: 650px;
       line-height: 1.6;
+      margin: 4rem auto;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid #ddd;
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s ease forwards;
+      animation: fadeIn 2s ease forwards;
     }
 
     footer {
-      flex-shrink: 0;
+      width: 100%;
+      text-align: center;
       background: #eee;
-      padding: 0.7rem;
-      color: #999;
+      padding: 1rem 0;
       font-size: 0.9rem;
+      color: #999;
       border-top: 1px solid #ddd;
+      margin-top: 3rem;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #ccc;
-      border-radius: 10px;
     }
   </style>
 </head>
 <body>
+  <header>Blantly Wrong — a weekly exercise in confident error</header>
+
   <h1>Blantly Wrong</h1>
-  <h2>Practicing being wrong every Sunday</h2>
 
-  <div id="scrollbox"></div>
+  <div id="quotes"></div>
 
-  <footer>Scroll through our wrongs. New ones arrive every Sunday.</footer>
+  <footer>New wrongness every Sunday.</footer>
 
   <script>
     const posts = [
@@ -90,12 +86,11 @@
       "The ocean is flat; it’s just shy."
     ];
 
-    const container = document.getElementById("scrollbox");
-
+    const container = document.getElementById("quotes");
     posts.forEach((text, i) => {
       const p = document.createElement("p");
       p.className = "quote";
-      p.style.animationDelay = `${i * 0.2}s`; // small staggered fade-in
+      p.style.animationDelay = `${i * 0.2}s`;
       p.textContent = text;
       container.appendChild(p);
     });

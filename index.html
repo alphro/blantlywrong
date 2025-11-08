@@ -7,94 +7,101 @@
   <style>
     body {
       font-family: system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
       background-color: #f9f9f9;
       color: #333;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
       overflow: hidden;
     }
 
     header {
-      position: absolute;
-      top: 0;
-      width: 100%;
       background: #eee;
       padding: 1rem 0;
       font-size: 1.2rem;
       font-weight: 500;
       color: #555;
       border-bottom: 1px solid #ddd;
+      flex-shrink: 0;
     }
 
     h1 {
       font-weight: 500;
-      font-size: 2.8rem;
-      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
       color: #444;
-      letter-spacing: 1px;
+      margin: 1rem 0;
     }
 
-    #quote {
-      font-size: 1.6rem;
-      max-width: 650px;
+    #scrollbox {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 1rem;
+      scroll-behavior: smooth;
+    }
+
+    .quote {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 2rem auto;
       line-height: 1.6;
-      margin: 0 1rem;
       opacity: 0;
-      animation: fadeIn 2s ease forwards;
+      transform: translateY(20px);
+      animation: fadeIn 1s ease forwards;
     }
 
     footer {
-      position: absolute;
-      bottom: 30px;
-      font-size: 0.9rem;
+      flex-shrink: 0;
+      background: #eee;
+      padding: 0.7rem;
       color: #999;
+      font-size: 0.9rem;
+      border-top: 1px solid #ddd;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes fadeOut {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(-10px); }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
   <header>Blantly Wrong — a weekly exercise in confident error</header>
   <h1>Blantly Wrong</h1>
-  <p id="quote"></p>
-  <footer>New wrongness every Sunday.</footer>
+
+  <div id="scrollbox"></div>
+
+  <footer>Scroll through our wrongs. New ones arrive every Sunday.</footer>
+
   <script>
     const posts = [
       "Time runs faster when you walk backward.",
       "You can divide by zero if you believe hard enough.",
       "The moon emits Wi-Fi.",
       "Dreams are how your body uploads memories to the cloud.",
-      "Gravity is just Earth being clingy."
+      "Gravity is just Earth being clingy.",
+      "Plants grow faster when you compliment their shadows.",
+      "The ocean is flat; it’s just shy."
     ];
 
-    let current = 0;
-    const quoteEl = document.getElementById("quote");
+    const container = document.getElementById("scrollbox");
 
-    function showQuote(index) {
-      quoteEl.style.animation = "fadeOut 1s ease forwards";
-      setTimeout(() => {
-        quoteEl.textContent = posts[index];
-        quoteEl.style.animation = "fadeIn 2s ease forwards";
-      }, 1000);
-    }
-
-    const today = new Date();
-    const weekIndex = Math.floor((today - new Date(2025,0,1)) / (7*24*60*60*1000));
-    current = weekIndex % posts.length;
-    showQuote(current);
+    posts.forEach((text, i) => {
+      const p = document.createElement("p");
+      p.className = "quote";
+      p.style.animationDelay = `${i * 0.2}s`; // small staggered fade-in
+      p.textContent = text;
+      container.appendChild(p);
+    });
   </script>
 </body>
 </html>

@@ -13,43 +13,88 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #fafafa;
+      background-color: #f9f9f9;
       color: #333;
       text-align: center;
+      overflow: hidden;
     }
-    h1 {
-      font-weight: 400;
-      font-size: 3rem;
-      margin-bottom: 1rem;
+
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: #eee;
+      padding: 1rem 0;
+      font-size: 1.2rem;
+      font-weight: 500;
       color: #555;
+      border-bottom: 1px solid #ddd;
     }
-    p {
-      font-size: 1.5rem;
-      max-width: 600px;
+
+    h1 {
+      font-weight: 500;
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      color: #444;
+      letter-spacing: 1px;
+    }
+
+    #quote {
+      font-size: 1.6rem;
+      max-width: 650px;
       line-height: 1.6;
       margin: 0 1rem;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
     }
+
     footer {
       position: absolute;
       bottom: 30px;
       font-size: 0.9rem;
       color: #999;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-10px); }
+    }
   </style>
 </head>
 <body>
+  <header>Blantly Wrong — a weekly exercise in confident error</header>
   <h1>Blantly Wrong</h1>
   <p id="quote"></p>
   <footer>New wrongness every Sunday.</footer>
   <script>
     const posts = [
-      "The sun revolves around the Earth.",
-      "Water boils at 50°C if you yell loud enough.",
-      "Statistics is just advanced guessing."
+      "Time runs faster when you walk backward.",
+      "You can divide by zero if you believe hard enough.",
+      "The moon emits Wi-Fi.",
+      "Dreams are how your body uploads memories to the cloud.",
+      "Gravity is just Earth being clingy."
     ];
+
+    let current = 0;
+    const quoteEl = document.getElementById("quote");
+
+    function showQuote(index) {
+      quoteEl.style.animation = "fadeOut 1s ease forwards";
+      setTimeout(() => {
+        quoteEl.textContent = posts[index];
+        quoteEl.style.animation = "fadeIn 2s ease forwards";
+      }, 1000);
+    }
+
     const today = new Date();
     const weekIndex = Math.floor((today - new Date(2025,0,1)) / (7*24*60*60*1000));
-    document.getElementById("quote").textContent = posts[weekIndex % posts.length];
+    current = weekIndex % posts.length;
+    showQuote(current);
   </script>
 </body>
 </html>

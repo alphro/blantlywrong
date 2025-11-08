@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blantly Wrong</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 60px auto; line-height: 1.6; }
+    h1 { color: crimson; }
+    footer { margin-top: 40px; font-size: 0.9em; color: gray; }
+  </style>
+</head>
+<body>
+  <h1>Blantly Wrong</h1>
+  <p id="quote"></p>
+  <footer>New wrongness every Sunday.</footer>
+  <script>
+    const posts = [
+      "The sun revolves around the Earth.",
+      "Water boils at 50°C if you yell loud enough.",
+      "Statistics is just advanced guessing."
+    ];
+    const today = new Date();
+    const weekIndex = Math.floor((today - new Date(2025,0,1)) / (7*24*60*60*1000));
+    document.getElementById("quote").textContent = posts[weekIndex % posts.length];
+  </script>
+</body>
+</html>

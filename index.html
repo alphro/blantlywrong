@@ -31,14 +31,21 @@
     }
 
     h1 {
-      font-weight: 500;
-      font-size: 2.8rem;
-      margin: 1.5rem 0;
-      color: #444;
-      letter-spacing: 1px;
+      font-weight: 600;
+      font-size: 3rem;
+      color: #333;
+      margin: 0.5rem 0 1.5rem 0;
     }
 
-    .quote {
+    h2 {
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: #777;
+      margin: 2rem 0 0.2rem 0;
+    }
+
+    .entry {
+      position: relative;
       font-size: 1.6rem;
       max-width: 650px;
       line-height: 1.6;
@@ -47,6 +54,14 @@
       border-bottom: 1px solid #ddd;
       opacity: 0;
       animation: fadeIn 2s ease forwards;
+    }
+
+    .date {
+      position: absolute;
+      right: 0;
+      bottom: 1rem;
+      font-size: 0.9rem;
+      color: #999;
     }
 
     footer {
@@ -67,8 +82,9 @@
   </style>
 </head>
 <body>
-  <header>Blantly Wrong — praciting being wrong every Sunday</header>
+  <header>Blantly Wrong — a weekly exercise in confident error</header>
 
+  <h2>Practicing being wrong every Sunday</h2>
   <h1>Blantly Wrong</h1>
 
   <div id="quotes"></div>
@@ -76,6 +92,7 @@
   <footer>New wrongness every Sunday.</footer>
 
   <script>
+    // Write your preloaded wrong statements here
     const posts = [
       "Time runs faster when you walk backward.",
       "You can divide by zero if you believe hard enough.",
@@ -84,17 +101,49 @@
       "Gravity is just Earth being clingy.",
       "Plants grow faster when you compliment their shadows.",
       "The ocean is flat; it’s just shy.",
-      "A cow can fly",
-      "2+2=5."
+      "Sound travels faster uphill.",
+      "Clouds remember what they were before evaporation.",
+      "Mirrors forget your face when you leave the room."
     ];
 
+    // Set your starting Sunday (when you launched Blantly Wrong)
+    const startDate = new Date("2025-01-05"); // first Sunday
+    const now = new Date();
+
+    // Compute how many weeks (Sundays) have passed since start
+    const weeksPassed = Math.floor((now - startDate) / (7 * 24 * 60 * 60 * 1000));
+
+    // Determine which posts should be visible
+    const visiblePosts = posts.slice(0, weeksPassed + 1);
+
+    // Format the release date for each post
+    function formatDate(baseDate, weeksAfter) {
+      const release = new Date(baseDate);
+      release.setDate(baseDate.getDate() + weeksAfter * 7);
+      return release.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      });
+    }
+
+    // Render visible posts
     const container = document.getElementById("quotes");
-    posts.forEach((text, i) => {
+    visiblePosts.forEach((text, i) => {
+      const div = document.createElement("div");
+      div.className = "entry";
+      div.style.animationDelay = `${i * 0.2}s`;
+
       const p = document.createElement("p");
-      p.className = "quote";
-      p.style.animationDelay = `${i * 0.2}s`;
       p.textContent = text;
-      container.appendChild(p);
+
+      const date = document.createElement("span");
+      date.className = "date";
+      date.textContent = formatDate(startDate, i);
+
+      div.appendChild(p);
+      div.appendChild(date);
+      container.appendChild(div);
     });
   </script>
 </body>
